@@ -1,2 +1,2 @@
-# woocommerce
+# Woocommerce
 Additional feature for woocomerce.
