@@ -203,11 +203,11 @@ function ss_gift_additional_notification($order_id, $checkout=null) {
 			$user_id = wc_create_new_customer( $gift_email, $gift_email, $gift_email );
 			update_user_meta( $user_id, "billing_first_name", $gift_fname );
 			update_user_meta( $user_id, "billing_last_name", $gift_lname );
-			$text = "Login using following detail to receive the gift. <br> <a href='https://www.weddingworkshopstl.com/my-account/orders/' target='blank'>https://www.weddingworkshopstl.com/my-account/orders/</a><br> Username: " . $gift_email . " <br>Password: ". $gift_email;
+			$text = "Login using following detail to receive the gift. <br> <a href='https://siteurl.com/my-account/orders/' target='blank'>https://siteurl.com/my-account/orders/</a><br> Username: " . $gift_email . " <br>Password: ". $gift_email;
        }else{
 		   //Get user if already exists
            $user_id = get_user_by( 'email', $gift_email )->ID;
-           $text = "It seems that " . $gift_email . " already has an account. Please login to receive the gift. <br> <a href='https://www.weddingworkshopstl.com/my-account/orders/' target='blank'>https://www.weddingworkshopstl.com/my-account/orders/</a>";
+           $text = "It seems that " . $gift_email . " already has an account. Please login to receive the gift. <br> <a href='https://siteurl.com/my-account/orders/' target='blank'>https://siteurl.com/my-account/orders/</a>";
        }
        iF($user_id){
 		   //Transfer order to the Recipient's account
