@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col no-gutters">
+            <div class="categories row align-items-center">
+                <div class="col-auto category all active">
+                    <div>
+                        <span>All products</span>
+                    </div>
+                </div>
+                {% for block in section.blocks %}
+                    {% assign collection = collections[block.settings.collections] %}
+                    <div class="col-auto category" data-id="{{ collection.id }}">
+                        <div><span>{{ collection.title }}:</span> <span
+                                    class="categ-count">{{ collection.all_products_count }}</span></div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% comment %}
+            <select name="categories" id="categories">
+              <option value="">All products</option>
+              <option value="161046298682">Energizing Smoothies</option>
+              <option value="161047052346">Extra Protein Smoothies</option>
+            </select>
+            {% endcomment %}
+        </div>
+        <div class="col current-selection">
+            <span>YOUR BOX</span>
+            <span class="js-count">0 / 24</span>
+        </div>
+    </div>
+    <div class="product-container container">
+        <div class="row no-gutters js-flavor_boxes">
+            {% for block in section.blocks %}
+                {% assign collection = collections[block.settings.collections] %}
+                {% for product in collection.products %}
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6 product-box product-box-{{ product.id }}"
+                         data-product-id="{{ product.id }}">
+                        <div class="product-box-inner">
+                            <div class="product-box-img">
+                                <img src="{{ product.featured_image | img_url: '480x' }}"
+                                     alt="{{ product.featured_image.alt }}"/>
+                            </div>
+                            <div class="product-title">{{ product.title }}</div>
+                            <div class="product-counter-wrapper">
+                                <div class="product-counter">
+                                    <span data-product-price="{{ product.price }}" data-slot-id="{{ product.id }}"
+                                          class="product__quantity-decrease no-select product__updown">−</span>
+                                    <input data-product-price="{{ product.price }}" data-addon="0"
+                                           data-slot-inventory="no_inventory" data-slot-id="{{ product.id }}"
+                                           class="product__quantity-val meal-qty" type="text" maxlength="2" value="0">
+                                    <span data-product-price="{{ product.price }}" data-slot-id="{{ product.id }}"
+                                          class="product__quantity-increase no-select product__updown">+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    window.productWithCategory = {
+        {% for block in section.blocks %}
+        {% assign collection = collections[block.settings.collections] %}
+        "{{ collection.id }}": [
+            {% for product in collection.products %}
+            {{ product.id }},
+            {% endfor %}
+        ],
+        {% endfor %}
+    }
+</script>
+
+{% schema %}
+{
+    "name": "Category Selector",
+    "max_blocks": 4,
+    "blocks": [
+        {
+            "type": "categories",
+            "name": "Categories",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collections",
+                    "label": "Collection"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
