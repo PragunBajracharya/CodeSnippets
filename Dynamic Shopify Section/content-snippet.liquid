@@ -1,0 +1,112 @@
+<div class="container hero-container text-with-image">
+  <div class="row align-items-center">
+    {% for block in section. blocks %}
+    	{% case block.type %}
+    
+    	  {% comment %}
+          	Content block
+    	  {% endcomment %}
+          {% when 'html' %}
+            <div class="col-sm-6 col-xs-12 mb-3">
+              {% if block.settings.title %}
+              	<h2>{{ block.settings.title }}</h2>
+              {% endif %}
+              <p>{{ block.settings.content }}</p>
+              {%- if block.settings.primary_btn != blank -%}
+                <div>
+                  <a href="{{ block.settings.primary_btn_link }}" class="btn btn-primary btn-wide-sm hero-item__btn">
+                    {{ block.settings.primary_btn }}
+                  </a>
+                </div>
+              {%- endif -%}
+    		</div>
+    
+    	  {% comment %}
+          	Image block
+    	  {% endcomment %}
+          {% when 'image' %}
+            <div class="col-sm-6 col-xs-12 mb-3">
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt | escape }}">
+    		</div>
+    
+    	  {% comment %}
+          	Button block
+    	  {% endcomment %}
+    	  {% when 'btn' %}
+            <div class="col-sm-12 col-xs-12 mb-3">
+              {%- if block.settings.main_btn != blank -%}
+                <div class="text-center">
+                  <a href="{{ block.settings.main_btn_link }}" class="btn btn-primary btn-wide-sm hero-item__btn">
+                    {{ block.settings.main_btn }}
+                  </a>
+                </div>
+              {%- endif -%}
+    		</div>
+    
+    	  {% comment %}
+          	Collection block
+    	  {% endcomment %}
+    	  {% when 'collection' %}
+            <div class="col-sm-12 col-xs-12 mb-3">
+              {%- render 'section-bg-init',
+                section_id: block.id,
+                alt_bg: block.settings.use_section_bg_color
+              -%}
+
+              {% assign collection = collections[block.settings.collection] %}
+              {%- assign product_limit = block.settings.grid | times: block.settings.rows -%}
+              {% assign featured_grid_layout = 0 %}
+              {% assign product_img_url_width = "450x"%}
+              {% case block.settings.grid %}
+                {% when 2 %}
+                  {% assign featured_grid_layout = 6 %}
+                  {% assign product_img_url_width = "550x"%}
+                {% when 3 %}
+                  {% assign featured_grid_layout = 4 %}
+                {% when 4 %}
+                  {% assign featured_grid_layout = 3 %}
+              {% endcase %}
+              {% if block.block.use_section_bg_color %}
+              <style>
+                .section-wrapper-bg-{{block.id}}, .section-wrapper-bg-{{block.id}} .block-title {
+                background: {{block.alternate_bg_color}};
+              }
+              </style>
+              {% endif %}
+              {%- if block.settings.show_view_all -%}
+                {% assign hero_class = null %}
+              {%- else -%}
+                {% assign hero_class = '-grid' %}
+              {%- endif -%}
+              <div class="section-wrapper-bg-{{block.id}}">
+              <div class="container hero-container" data-section-id="{{ block.id }}" data-section-type="fetured-collection-section">
+                {% render "section-header", section_title: block.settings.title, section_subtitle: block.settings.subtitle %}
+
+                <div class="row collection-row {% if settings.align_height %} use_align_height height_{{block.collection_height}}px {% else %} use_image_height {% endif %}" data-gutter="" id="filter-row">
+                  {% if collection != blank and collection.products.size > 0 %}
+                    {% for product in collection.products limit: product_limit %}
+                      <div class="col-md-{{ featured_grid_layout }} col-sm-6 col-xs-6 collection-products-wrapper">
+                        {% render 'product-loop', product: product %}
+                         <div class="triangle-left">
+                                <div class="inner-triangle"></div>
+                              </div>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                   {% render "onboarding-collection" %}
+                  {% endif %}
+                </div>
+                {% if block.settings.show_view_all %}
+                  <div class="text-center">
+                    <a href="{{ collection.url }}" class="btn btn-primary btn-wide">
+                      View {{ collection.title }} Products
+                    </a>
+                  </div>
+                {% endif %}
+              </div>
+              </div>
+    		</div>
+        {% endcase %}
+    {% endfor %}
+  </div>
+</div>

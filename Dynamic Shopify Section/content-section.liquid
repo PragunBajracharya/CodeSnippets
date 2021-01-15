@@ -1,0 +1,137 @@
+{% render 'content-snippet' %}
+
+{% schema %}
+  {
+    "name": "Science Page Content",
+	"class":"index-section",
+    "blocks": [
+	{
+		"type": "html",
+		"name": "Content block",
+		"settings": [
+            {
+				"type": "text",
+				"id": "title",
+				"label": "Title"
+			},
+			{
+				"type": "html",
+				"id": "content",
+				"label": "Content"
+			},
+			{
+				"type": "text",
+				"id": "primary_btn",
+				"label": "Primary Button Label"
+			},
+			{
+				"type": "url",
+				"id": "primary_btn_link",
+				"label": "Primary Button Link"
+			}
+		]
+	},
+	{
+		"type": "image",
+		"name": "Image block",
+		"settings": [
+			{
+				"type": "image_picker",
+				"id": "image",
+				"label": "Image"
+			}
+		]
+	},
+	{
+		"type": "btn",
+		"name": "Button block",
+		"settings": [
+            {
+                "type": "text",
+                "id": "main_btn",
+                "label": "Main Button Label"
+            },
+            {
+                "type": "url",
+                "id": "main_btn_link",
+                "label": "Main Button Link"
+            }
+        ]
+	},
+	{
+		"type": "collection",
+		"name": "Collection block",
+		"settings": [
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Heading ",
+              "default": "Featured collection"
+            },
+            {
+              "type": "text",
+              "id": "subtitle",
+              "label": "Description"
+            },
+            {
+              "id": "collection",
+              "type": "collection",
+              "label": "Collection"
+            },
+            {
+                 "type":"checkbox",
+                 "id":"use_section_bg_color",
+                 "label":"Use alternate background"
+             },
+            {
+                 "type": "header",
+                 "content": "Layout"
+              },
+            {
+                "type": "range",
+                "id": "grid",
+                "label": "Products per row",
+                "min":       2,
+                "max":        4,
+                "step":       1,
+                "default": 4
+            },
+            {
+                "type": "range",
+                "id": "rows",
+                "label": "Number of rows",
+                "min":       1,
+                "max":        5,
+                "step":       1,
+                "default": 1
+            },
+
+            {
+              "type": "checkbox",
+              "id": "show_grid_type",
+              "label": "Show product type"
+            },
+            {
+              "type":"checkbox",
+              "id":"show_sale_label",
+              "label":"Show sale badges",
+              "default":true
+            },
+            {
+              "type": "checkbox",
+              "id": "show_view_all",
+              "label": "Show 'View All' button",
+              "default": false
+            },
+             {
+              "type": "checkbox",
+              "id": "use_quick_view",
+              "label": "Enable quick view",
+              "default": true
+            }
+        ]
+	}
+	]
+  }
+{% endschema %}
+
